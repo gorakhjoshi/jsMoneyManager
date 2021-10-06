@@ -1,7 +1,7 @@
 'use strict';
 
 const account1 = {
-  owner: 'Tufan',
+  owner: 'Gorakh Joshi',
   movements: [200, 450, -400, 3000, -650, -130, 1300],
   interestRate: 1.2,
   pin: 1111,
@@ -69,21 +69,6 @@ account1.movements.forEach((mov, i) => {
 
 const movements = [200, 450, -400, 3000, -650, -130, 1300];
 
-// The map Method
-const eurToUsd = 1.1;
-const movementsUSD = movements.map(function (mov) {
-  return mov * eurToUsd;
-});
-// const movementsUSD = movements.map(mov => mov * eurToUsd);
-// console.log(movements);
-// console.log(movementsUSD);
-// const movementsUSDfor = [];
-// for (const mov of movements) movementsUSDfor.push(mov * eurToUsd);
-// console.log(movementsUSDfor);
-// const movementsDescriptions = movements.map(
-//   (mov, i) =>
-//     `Movement ${i + 1}: You ${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(
-//       mov
-//     )}`
-// );
-console.log(movementsUSD);
+movements.reduce((acc, mov, i, arr) => {
+  console.log(acc);
+}, 0);
