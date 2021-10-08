@@ -78,3 +78,10 @@ const createUsername = function (accounts) {
 };
 
 createUsername(accounts);
+
+const calcDisplayBalance = function (movements) {
+  const balance = account1.movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${balance} €`;
+};
+
+calcDisplayBalance(account1.movements);
