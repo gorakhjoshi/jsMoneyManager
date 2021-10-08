@@ -8,27 +8,27 @@ const account1 = {
 };
 
 const account2 = {
-  owner: 'Amul',
+  owner: 'Amul Basnet',
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
   pin: 222,
 };
 
 const account3 = {
-  owner: 'Subash',
+  owner: 'Subash Bhatta',
   movements: [200, -200, 340, -300, -20, 50, 400, -460],
   interestRate: 0.7,
   pin: 3333,
 };
 
 const account4 = {
-  owner: 'Manish',
+  owner: 'Manish Bhandari',
   movements: [430, 1000, 700, 50, 90],
   interestRate: 1,
   pin: 4444,
 };
 
-const account = [(account1, account2, account3, account4)];
+const accounts = [account1, account2, account3, account4];
 
 const labelWelcome = document.querySelector('.welcome');
 const labelDate = document.querySelector('.date');
@@ -67,8 +67,14 @@ account1.movements.forEach((mov, i) => {
   containerMovements.insertAdjacentHTML('afterbegin', html);
 });
 
-const movements = [200, 450, -400, 3000, -650, -130, 1300];
+const createUsername = function (accounts) {
+  accounts.forEach((account) => {
+    account.username = account.owner
+      .toLowerCase()
+      .split(' ')
+      .map((name) => name[0])
+      .join('');
+  });
+};
 
-movements.reduce((acc, mov, i, arr) => {
-  console.log(acc);
-}, 0);
+createUsername(accounts);
