@@ -55,17 +55,19 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-account1.movements.forEach((mov, i) => {
-  const type = mov > 0 ? 'deposit' : 'withdrawal';
+const displayMovements = function () {
+  account1.movements.forEach((mov, i) => {
+    const type = mov > 0 ? 'deposit' : 'withdrawal';
 
-  const html = `<div class='movements__row'>
+    const html = `<div class='movements__row'>
     <div class='movements__type movements__type--${type}'>${i + 1} ${type}</div>
 
     <div class='movements__value'>${mov}€</div>
   </div>`;
 
-  containerMovements.insertAdjacentHTML('afterbegin', html);
-});
+    containerMovements.insertAdjacentHTML('afterbegin', html);
+  });
+};
 
 const createUsername = function (accounts) {
   accounts.forEach((account) => {
@@ -83,8 +85,6 @@ const calcDisplayBalance = function (movements) {
   const balance = account1.movements.reduce((acc, mov) => acc + mov, 0);
   labelBalance.textContent = `${balance} €`;
 };
-
-calcDisplayBalance(account1.movements);
 
 const calcDisplaySummary = function () {
   const income = account1.movements
@@ -107,11 +107,9 @@ const calcDisplaySummary = function () {
 
   labelSumInterest.textContent = `${interest}€`;
 };
-calcDisplaySummary();
-
-// const accounts = [account1, account2, account3, account4];
 
 let currentAccount;
+
 btnLogin.addEventListener('click', function (e) {
   e.preventDefault();
 
@@ -124,8 +122,13 @@ btnLogin.addEventListener('click', function (e) {
     labelWelcome.textContent = `Welcome back, ${
       currentAccount.owner.split(' ')[0]
     }`;
-    containerApp.style.opacity git = 1;
+    containerApp.style.opacity = 1;
+
+    displayMovements();
+    calcDisplayBalance(account1.movements);
+    calcDisplaySummary();
   }
+
   inputLoginUsername.value = inputLoginPin.value = '';
   inputLoginPin.blur();
 });
