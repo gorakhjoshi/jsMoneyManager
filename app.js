@@ -55,8 +55,8 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-const displayMovements = function () {
-  account1.movements.forEach((mov, i) => {
+const displayMovements = function (movements) {
+  movements.forEach((mov, i) => {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const html = `<div class='movements__row'>
@@ -81,13 +81,13 @@ const createUsername = function (accounts) {
 
 createUsername(accounts);
 
-const calcDisplayBalance = function (movements) {
-  const balance = account1.movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${balance} €`;
+const calcDisplayBalance = function (acc) {
+  acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${acc.balance} €`;
 };
 
-const calcDisplaySummary = function () {
-  const income = account1.movements
+const calcDisplaySummary = function (acc) {
+  const income = acc.movements
     .filter((mov) => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
 
@@ -108,6 +108,12 @@ const calcDisplaySummary = function () {
   labelSumInterest.textContent = `${interest}€`;
 };
 
+const updateUI = (acc) => {
+  displayMovements(acc.movements);
+  calcDisplayBalance(acc);
+  calcDisplaySummary(acc);
+};
+
 let currentAccount;
 
 btnLogin.addEventListener('click', function (e) {
@@ -117,17 +123,16 @@ btnLogin.addEventListener('click', function (e) {
     (acc) => acc.username === inputLoginUsername.value
   );
 
+  console.log(currentAccount);
+
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
     // Display UI and message
     labelWelcome.textContent = `Welcome back, ${
       currentAccount.owner.split(' ')[0]
     }`;
     containerApp.style.opacity = 1;
-
-    displayMovements();
-    calcDisplayBalance(account1.movements);
-    calcDisplaySummary();
   }
+  updateUI(currentAccount);
 
   inputLoginUsername.value = inputLoginPin.value = '';
   inputLoginPin.blur();
